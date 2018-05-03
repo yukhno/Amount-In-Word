@@ -1,0 +1,455 @@
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{NumInWord}
+[2018/03/01 v2.1 Number In Words]
+
+
+
+\gdef\VAT{20}
+\gdef\woVAT{0.0}
+
+\global\def\Ukraine{UA}
+\global\def\Russian{RU}
+\global\def\English{EN}
+
+\global\def\Male{M}
+\global\def\Female{F}
+
+
+
+\newcommand{\NHundredInWords}[3]{%
+ \edef\nhiw{#1}%
+ \edef\Ediv{100}%
+ \edef\nhun{0}%
+ \edef\nten{0}%
+ \edef\NHIW{}%
+%
+ \FPifzero\nhiw%
+  \ifx#2\Ukraine \xdef\NHIW{нуль|}\fi%
+  \ifx#2\Russian \xdef\NHIW{|ноль|}\fi%
+  \ifx#2\English \xdef\NHIW{zero}\fi%
+ \fi%
+%
+ \FPdiv\nhun\nhiw\Ediv%
+ \FPtrunc\nhun\nhun{0}%
+% 
+ \ifx#2\Ukraine%
+  \ifcase\nhun \xdef\NHIW{}%
+  \or \xdef\NHIW{сто}%
+  \or \xdef\NHIW{двісті}%
+  \or \xdef\NHIW{триста}%
+  \or \xdef\NHIW{чотириста}%
+  \or \xdef\NHIW{п'ятсот}%
+  \or \xdef\NHIW{шістсот}%
+  \or \xdef\NHIW{сімсот}%
+  \or \xdef\NHIW{вісімсот}%
+  \or \xdef\NHIW{дев'ятсот}%
+  \else \xdef\NHIW{}
+  \fi%
+ \fi%
+% 
+ \ifx#2\Russian%
+  \ifcase\nhun \xdef\NHIW{}%
+  \or \xdef\NHIW{сто}%
+  \or \xdef\NHIW{двести}%
+  \or \xdef\NHIW{триста}%
+  \or \xdef\NHIW{четыриста}%
+  \or \xdef\NHIW{пятьсот}%
+  \or \xdef\NHIW{шестьсот}%
+  \or \xdef\NHIW{семьсот}%
+  \or \xdef\NHIW{восемьсот}%
+  \or \xdef\NHIW{девятьсот}%
+  \else \xdef\NHIW{}
+  \fi%
+ \fi%
+%
+ \ifx#2\English%
+  \ifcase\nhun \xdef\NHIW{} 
+  \or \xdef\NHIW{one hundred}%
+  \or \xdef\NHIW{two hundred}%
+  \or \xdef\NHIW{three hundred}%
+  \or \xdef\NHIW{four hundred}%
+  \or \xdef\NHIW{five hundred}%
+  \or \xdef\NHIW{six hundred}%
+  \or \xdef\NHIW{seven hundred}%
+  \or \xdef\NHIW{eight hundred}%
+  \or \xdef\NHIW{nine hundred}%
+  \else \xdef\NHIW{}
+  \fi%
+ \fi%
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+ \FPmul\tnum\nhun\Ediv%
+ \FPsub\nhiw\nhiw\tnum%
+ \FPdiv\Ediv\Ediv{10}%
+% 
+ \FPdiv\nten\nhiw\Ediv%
+ \FPtrunc\nten\nten{0}%
+% 
+ \ifx#2\Ukraine%
+  \ifcase\nten% \xdef\NHIW{\NHIW}
+  \or \ifcase\nhiw% \xdef\NHIW{\NHIW} % 0
+      \or %\xdef\NHIW{\NHIW} % 1
+      \or %\xdef\NHIW{\NHIW} % 2
+      \or %\xdef\NHIW{\NHIW} % 3
+      \or %\xdef\NHIW{\NHIW} % 4
+      \or %\xdef\NHIW{\NHIW} % 5
+      \or %\xdef\NHIW{\NHIW} % 6
+      \or %\xdef\NHIW{\NHIW} % 7
+      \or %\xdef\NHIW{\NHIW} % 8
+      \or %\xdef\NHIW{\NHIW} % 9
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi десять}% 10
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi одинадцять}% 11
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi дванадцять}% 12
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi тринадцять}% 13
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi чотирнадцять}% 14
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi пя'тнадцять}% 15
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi шіснадцять}% 16
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi сімнадцять}% 17
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi вісімнадцять}% 18
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi дев'ятнадцять}% 19 
+      \else %\xdef\NHIW{\NHIW}
+      \fi%
+      \edef\nten{0}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi двадцять}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi тридцять}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi сорок}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi пя'тдесят}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi шісдесят}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi сімдесят}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi вісімдесят}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi дев'яносто}%
+  \else% \xdef\NHIW{\NHIW}
+  \fi%
+ \fi%
+ \ifx#2\Russian%
+  \ifcase\nten% \xdef\NHIW{\NHIW}
+  \or \ifcase\nhiw% \xdef\NHIW{\NHIW} % 0
+      \or %\xdef\NHIW{\NHIW} % 1
+      \or %\xdef\NHIW{\NHIW} % 2
+      \or %\xdef\NHIW{\NHIW} % 3
+      \or %\xdef\NHIW{\NHIW} % 4
+      \or %\xdef\NHIW{\NHIW} % 5
+      \or %\xdef\NHIW{\NHIW} % 6
+      \or %\xdef\NHIW{\NHIW} % 7
+      \or %\xdef\NHIW{\NHIW} % 8
+      \or %\xdef\NHIW{\NHIW} % 9
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi десять}% 10
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi одинадцать}% 11
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi двенадцать}% 12
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi тринадцать}% 13
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi четырнадцать}% 14
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi пятнадцать}% 15
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi шестнадцать}% 16
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi семнадцать}% 17
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi восемнадцать}% 18
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi девятнадцать}% 19 
+      \else% \xdef\NHIW{\NHIW}
+      \fi%
+      \edef\nten{0}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi двадцать}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi тридцать}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi сорок}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi пятьдесят}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi шестьдесят}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi семьдесят}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi восемьдесят}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi девяносто}%
+  \else% \xdef\NHIW{\NHIW}
+  \fi%
+ \fi%
+ \ifx#2\English%
+  \ifcase\nten% \xdef\NHIW{\NHIW}
+  \or \ifcase\nhiw% \xdef\NHIW{\NHIW} % 0
+      \or %\xdef\NHIW{\NHIW} % 1
+      \or %\xdef\NHIW{\NHIW} % 2
+      \or %\xdef\NHIW{\NHIW} % 3
+      \or %\xdef\NHIW{\NHIW} % 4
+      \or %\xdef\NHIW{\NHIW} % 5
+      \or %\xdef\NHIW{\NHIW} % 6
+      \or %\xdef\NHIW{\NHIW} % 7
+      \or %\xdef\NHIW{\NHIW} % 8
+      \or %\xdef\NHIW{\NHIW} % 9
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi ten}% 10
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi eleven}% 11
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi twelve}% 12
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi thirteen}% 13
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi fourteen}% 14
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi fifteen}% 15
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi sixnteen}% 16
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi seventeen}% 17
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi eighteen}% 18
+      \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi nineteen}% 19 
+      \else% \xdef\NHIW{\NHIW}
+      \fi%
+      \edef\nten{0}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi twenty}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi thirty}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi forty}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi fifty}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi sixty}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi seventy}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi eighty}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi ninety}%
+  \else% \xdef\NHIW{\NHIW}
+  \fi%
+ \fi%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \FPmul\tnum\nten\Ediv%
+ \FPsub\nhiw\nhiw\tnum%
+ \FPdiv\Ediv\Ediv{10}%
+ \FPdiv\nten\nhiw\Ediv%
+ \FPtrunc\nten\nten{0}%
+ \ifx#2\Ukraine%
+  \ifcase\nten% \xdef\NHIW{\NHIW}
+  \or \ifx#3\Male \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi один}%
+      \else \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi одна}\fi%
+  \or \ifx#3\Male \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi два}%
+      \else \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi дві}\fi%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi три}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi чотири}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \\setcounter{ncA}{0}else \NHIW \ \fi п'ять}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi шість}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi сім}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi вісім}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi дев'ять}%
+  \else% \xdef\NHIW{\NHIW}
+  \fi%
+ \fi%
+ \ifx#2\Russian%
+  \ifcase\nten% \xdef\NHIW{\NHIW}
+  \or \ifx#3\Male \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi один}%
+      \else \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi одна}\fi%
+  \or \ifx#3\Male \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi два}%
+      \else \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi две}\fi%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi три}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi четыри}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi пять}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi щесть}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi семь}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi восемь}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi девять}%
+  \else% \xdef\NHIW{\NHIW}
+  \fi%
+ \fi%
+ \ifx#2\English%
+  \ifcase\nten% \xdef\NHIW{\NHIW}
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi one}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi two}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi three}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi four}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi five}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi six}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi seven}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi eight}%
+  \or \xdef\NHIW{\ifx\NHIW\empty \else \NHIW \ \fi nine}%
+  \else% \xdef\NHIW{\NHIW}
+  \fi%
+ \fi%
+ \expandafter\NHIW%
+}
+
+%% #1 - Number
+%% #2 - Language { Ukr | Eng | Rus }
+%% #3 - { M | F }
+\newcounter{ord}%
+
+\newcommand{\NumberInWords}[3]{%
+ \edef\LNG{#2}%
+ \edef\SFM{#3}%
+ \edef\ninw{#1}% 
+ \edef\EE{1000000000000000}%
+ \setcounter{ord}{5}%
+ \edef\nNum{0}%
+ \edef\tnum{0}%
+ \edef\ttnum{0}%
+ \edef\sp{0}%
+ \xdef\sNIW{}%
+ \FPdiv\nNum\ninw\EE%
+ \FPtrunc\nNum\nNum{0}%
+ \loop%
+   \ifnum \value{ord} > 0%
+	\FPmul\tnum\nNum\EE%
+	\FPtrunc\tnum\tnum{0}%
+	\FPsub\ninw\ninw\tnum%
+	\FPdiv\EE\EE{1000}%
+	\FPtrunc\EE\EE{0}%
+	\FPdiv\nNum\ninw\EE%
+	\FPtrunc\nNum\nNum{0}%
+	\ifnum \nNum > 0
+      \ifnum\sp=0\edef\sp{1}\else\ \fi%
+	  \ifnum \value{ord} = 2
+	    \NHundredInWords\nNum\LNG\Female%
+	  \else%
+	    \ifnum \value{ord} = 1
+ 	      \NHundredInWords\nNum\LNG\SFM%
+ 	    \else%
+	      \NHundredInWords\nNum\LNG\Male%
+	    \fi%
+	  \fi%
+	  \FPdiv\ttnum\nNum{10}%
+	  \FPtrunc\tnum\ttnum{0}%
+	  \FPsub\ttnum\ttnum\tnum%
+	  \FPmul\ttnum\ttnum{10}%
+	  \FPtrunc\ttnum\ttnum{0}%
+	  \ifx#2\English%
+       \ifcase\value{ord}%
+        \or%
+        \or \ thousand%
+        \or \ million%
+        \or \ billion%
+        \or \ trillion%
+        \or \ quadrillion%
+        \else error%
+       \fi%
+      \fi
+	  \ifx#2\Ukraine%
+       \ifcase\value{ord}%
+        \or%\settowidth{\ppplen}{\thencc.\hspace{\labelsep}}
+        \or\ifcase\ttnum \ тисяч%
+             \or \ тисяча%
+             \or \ тисячі%
+             \or \ тисячі%
+             \or \ тисячі%
+             \else \ тисяч%
+            \fi%
+        \or\ifcase\ttnum \ мільйонів%
+             \or \ мільйон%
+             \or \ мільйона%
+             \or \ мільйона%
+             \or \ мільйона%
+             \else \ мільйонів%
+            \fi%
+        \or\ifcase\ttnum \ мільярдів%
+             \or \ мільярд%
+             \or \ мільярда%
+             \or \ мільярда%
+             \or \ мільярда%
+             \else \ мільярдів%
+            \fi%
+        \or\ifcase\ttnum \ трильйонів%
+             \or \ трильйон%
+             \or \ трильйона%
+             \or \ трильйона%
+             \or \ трильйона%
+             \else \ трильйонів%
+            \fi%
+        \or\ifcase\ttnum \ квадриллионов%
+             \or \ квадриллион%
+             \or \ квадриллиона%
+             \or \ квадриллиона%
+             \or \ квадриллиона%
+             \else \ квадриллионов%
+            \fi%
+        \else ошибка%
+       \fi%
+      \fi%
+	  \ifx#2\Russian%
+       \ifcase\value{ord}%
+        \or%
+        \or\ifcase\ttnum \ тысяч%
+             \or \ тысяча%
+             \or \ тысячи%
+             \or \ тысячи%
+             \or \ тысячи%
+             \else \ тысяч%
+            \fi%
+        \or\ifcase\ttnum \ миллионов%
+             \or \ миллион%
+             \or \ миллиона%
+             \or \ миллиона%
+             \or \ миллиона%
+             \else \ миллионов%
+            \fi%
+        \or\ifcase\ttnum \ миллиардов%
+             \or \ миллиард%
+             \or \ миллиарда%
+             \or \ миллиарда%
+             \or \ миллиарда%
+             \else \ миллиардов%
+            \fi%
+        \or\ifcase\ttnum \ триллионов%
+             \or \ триллион%
+             \or \ триллиона%
+             \or \ триллиона%
+             \or \ триллиона%
+             \else \ триллионов%
+            \fi%
+        \or\ifcase\ttnum \ квадриллионов%
+             \or \ квадриллион%
+             \or \ квадриллиона%
+             \or \ квадриллиона%
+             \or \ квадриллиона%
+             \else \ квадриллионов%
+            \fi%
+        \else ошибка%
+       \fi%
+      \fi%
+    \fi%
+   \addtocounter{ord}{-1}%
+   %\ifnum\value{ord} > 0 \ \fi%
+ \repeat%
+}
+
+\edef\UAH{UAH}
+\edef\USD{USD}
+\edef\EUR{EUR}
+\edef\RUR{RUR}
+
+%% #1 - Amount
+%% #2 - Language
+%% #3 - Currency
+\newcommand{\AmountInWords}[3]{%
+ \edef\Amount{#1}%
+ \edef\Language{#2}%
+ \edef\Currency{#3}%
+ \edef\Lnum{0}%
+ \edef\tsum{0}%
+ \edef\lsum{#1}%
+ \FPtrunc\tsum\Amount{0}%
+ \FPsub\lsum\Amount\tsum%
+ \FPmul\lsum\lsum{100}%
+ \FPtrunc\lsum\lsum{0}%
+ \ifnum\lsum<10 \xdef\lsum{0\lsum} \fi%
+ \numprint\Amount%
+ \ifx\Currency\UAH \ifx\Language\English \,\Currency \else \,грн.\fi \ (\NumberInWords\Amount\Language\Female \fi%
+ \ifx\Currency\RUR \ifx\Language\English \,\Currency \else \,руб.\fi \ (\NumberInWords\Amount\Language\Male \fi%
+ \ifx\Currency\USD \,USD \ (\NumberInWords\Amount\Language\Male \fi%
+ \FPdiv\Lnum{#1}{100}%
+ \FPtrunc\tsum\Lnum{0}%
+ \FPsub\Lnum\Lnum\tsum%
+ \FPmul\Lnum\Lnum{100}%
+ \FPtrunc\Lnum\Lnum{0}
+ \ifx\Language\Ukraine
+  \ifnum\Lnum=0 гривень
+  \else%
+   \ifnum\Lnum=1 гривня
+   \else%
+    \ifnum\Lnum<5 гривні
+    \else гривень
+    \fi%
+   \fi%
+  \fi%
+  \lsum\,коп.)%
+ \fi%
+}
+
+
+\newcommand{\PlusVAT}[4]{%
+ \edef\Am{#2}%
+ \edef\sVAT{0}%
+ \FPmul\sVAT\Am{#1}%
+ \FPdiv\sVAT\sVAT{100}%
+ \FPround\sVAT\sVAT{2}%
+ \FPtrunc\sVAT\sVAT{2}%
+ \FPadd\TotalPlusVAT\Am\sVAT%
+ \FPtrunc\TotalPlusVAT\TotalPlusVAT{2}%
+ крім того ПДВ \numprint{#1}\%, що становить \AmountInWords\sVAT{#3}{#4}, 
+ а разом \AmountInWords\TotalPlusVAT{#3}{#4}
+}
+
+\newcommand{\AmountInWordsPlusVAT}[3]{%
+  \AmountInWords{#1}{#2}{#3}, \PlusVAT{\VAT}{#1}{#2}{#3}
+}
+
+\endinput
