@@ -415,10 +415,10 @@
  \ifx\Currency\UAH \ifx\Language\English \,\Currency \else \,грн.\fi \ (\NumberInWords\Amount\Language\Female \fi%
  \ifx\Currency\RUR \ifx\Language\English \,\Currency \else \,руб.\fi \ (\NumberInWords\Amount\Language\Male \fi%
  \ifx\Currency\USD \,USD \ (\NumberInWords\Amount\Language\Male \fi%
- \FPdiv\Lnum{#1}{100}%
+ \FPdiv\Lnum{#1}{10}%
  \FPtrunc\tsum\Lnum{0}%
  \FPsub\Lnum\Lnum\tsum%
- \FPmul\Lnum\Lnum{100}%
+ \FPmul\Lnum\Lnum{10}%
  \FPtrunc\Lnum\Lnum{0}
  \ifx\Language\Ukraine
   \ifnum\Lnum=0 гривень
